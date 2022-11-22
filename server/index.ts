@@ -4,11 +4,25 @@ import fastifyPrismaClient from 'fastify-prisma-client'
 import type { FastifyInstance } from 'fastify'
 import fastifyJwt from '@fastify/jwt'
 */
+import type { FastifyInstance } from 'fastify'
+import Fastyfi, { fastify } from 'fastify'
+import cors from '@fastify/cors'
+import fastyfyPrismaClient from 'fastify-prisma-client'
 import type { Prisma } from '@prisma/client'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
-
+const fastify: FastifyInstance = Fastyfi()
+fastify.register(fastyfyPrismaClient)
+;async () => {
+  await fastify.register(cors, {})
+  fastify.post('/', (req, reply) => {
+    const data = req.body
+    console.log(data)
+  })
+  await fastify.listen({ port: 8080 })
+  return { hello: 'world' }
+}
 async function main() {
   const includePosts = false
   let user: Prisma.UserCreateInput

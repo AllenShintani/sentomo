@@ -19,12 +19,16 @@ import {
 } from 'firebase/auth'
 import { FirebaseError } from '@firebase/util'
 import type { FormEvent } from 'react'
+import axios from 'axios'
+
+// const axios = require('axios').default
 
 const theme = createTheme()
 
 export default function SignUp() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     const data = new FormData(e.currentTarget)
     console.log({
       email: data.get('email'),
@@ -35,6 +39,30 @@ export default function SignUp() {
     console.log(typeof email)
     //FormDataEntryValue型をstring型に変える。
 
+    /*
+    axios
+      .get(`http://localhost:8080/`)
+      .then(function (response) {
+        console.log('ok')
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+      */
+
+    const indivData = [data.get('email'), data.get('password')]
+
+    console.log(indivData)
+    axios
+      .post('http://localhost:8080/data', indivData)
+      .then(() => {
+        console.log(indivData)
+      })
+      .catch((err) => {
+        console.log('err:', 'エラーだよ')
+      })
+
+    /*firebaseの認証
     try {
       const auth = getAuth()
       const userCredential = await createUserWithEmailAndPassword(
@@ -47,7 +75,7 @@ export default function SignUp() {
       if (event instanceof FirebaseError) {
         console.log(event)
       }
-    }
+    }*/
   }
 
   return (
