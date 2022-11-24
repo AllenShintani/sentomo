@@ -4,66 +4,44 @@ import fastifyPrismaClient from 'fastify-prisma-client'
 import type { FastifyInstance } from 'fastify'
 import fastifyJwt from '@fastify/jwt'
 */
-import type { FastifyInstance } from 'fastify'
-import Fastyfi, { fastify } from 'fastify'
-import cors from '@fastify/cors'
-import fastyfyPrismaClient from 'fastify-prisma-client'
+/*const prisma = new PrismaClient()
+const fastify: FastifyInstance = Fastyfi()
+fastify.register(fastyfyPrismaClient)*/
 import type { Prisma } from '@prisma/client'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
-const fastify: FastifyInstance = Fastyfi()
-fastify.register(fastyfyPrismaClient)
-;async () => {
-  await fastify.register(cors, {})
-  fastify.post('/', (req, reply) => {
-    const data = req.body
-    console.log(data)
-  })
-  await fastify.listen({ port: 8080 })
-  return { hello: 'world' }
-}
 async function main() {
-  const includePosts = false
-  let user: Prisma.UserCreateInput
+  console.log('server if')
 
-  // Check if posts should be included in the query
-  if (includePosts) {
-    console.log('ifの方')
-    user = {
-      familly: 'aajfi',
-      name: 'allen',
-      password: 'aaa',
-      mail: 'sa@psma.io',
-    }
-  } else {
-    console.log('elifの方')
-    user = {
-      password: 'i',
-      familly: 'a',
-      mail: 'sa@psma.io',
-      name: 'sa isma',
-    }
-  }
-
-  // Pass 'user' object into query
-  const createUser = await prisma.user.create({ data: user })
-  console.log(createUser)
+  const result = await prisma.user.create({
+    data: {
+      mail: 'elsa@prisma.io',
+      name: 'Elsa Prisma',
+      password: 'jdfksa',
+      familly: 'aofoaajf',
+    },
+  })
+  console.log(result)
 }
 
 main()
-  .then(async () => {
-    console.log('okだよ')
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.log('これはエラーだよ')
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+  .catch((e) => console.error(e))
+  .finally(async () => await prisma.$disconnect())
 
-/*安定
+/*
+連想配列としてばらばらに取り出すことに成功！！！
+----------------------------------------------------------------------------
+
+
+
+import type { FastifyInstance } from 'fastify'
+import Fastify, { fastify as fa } from 'fastify'
+import cors from '@fastify/cors'
+import type Prisma from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
+import fastifyPrismaClient from 'fastify-prisma-client'
+
 const prisma = new PrismaClient()
 const fastify: FastifyInstance = Fastify()
 fastify.register(fastifyPrismaClient)
@@ -72,12 +50,16 @@ fastify.register(fastifyPrismaClient)
     // put your options here
   })
   fastify.post('/data', (req, reply) => {
-    const data = req.body
-    console.log(data)
+    const data = req.body as { mail: string; password: string }
+    console.log(data.mail)
+    console.log(data.password)
   })
+
   await fastify.listen({ port: 8080 })
+  console.log(`Server listening at ${8080}`)
   return { hello: 'world' }
 })()
+*/
 
 //get やり方
 /*import fastify from 'fastify'
