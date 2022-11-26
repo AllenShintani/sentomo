@@ -33,10 +33,10 @@ export default function SignUp() {
     console.log({
       email: data.get('email'),
       password: data.get('password'),
+      name: data.get('lastName'),
+      familly: data.get('firstName'),
     })
-    const email: string = data.get('email') as string
-    const password: string = data.get('password') as string
-    console.log(typeof email)
+
     //FormDataEntryValue型をstring型に変える。
 
     /*
@@ -50,7 +50,13 @@ export default function SignUp() {
       })
       */
 
-    const indivData = [data.get('email'), data.get('password')]
+    const indivData = {
+      mail: data.get('email'),
+      password: data.get('password'),
+      name: data.get('lastName'),
+      familly: data.get('firstName'),
+    }
+    const test = data.get('email')
 
     console.log(indivData)
     axios
@@ -61,8 +67,8 @@ export default function SignUp() {
       .catch((err) => {
         console.log('err:', 'エラーだよ')
       })
-
-    /*firebaseの認証
+  }
+  /*firebaseの認証
     try {
       const auth = getAuth()
       const userCredential = await createUserWithEmailAndPassword(
@@ -76,7 +82,6 @@ export default function SignUp() {
         console.log(event)
       }
     }*/
-  }
 
   return (
     <ThemeProvider theme={theme}>

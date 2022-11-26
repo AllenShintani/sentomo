@@ -28,7 +28,7 @@ const prisma = new client_1.PrismaClient();
 const fastify = (0, fastify_1.default)();
 function kusa() {
     return __awaiter(this, void 0, void 0, function* () {
-        const resieve = false;
+        ;
         (() => __awaiter(this, void 0, void 0, function* () {
             yield fastify.register(cors_1.default, {
             // put your options here
@@ -38,8 +38,10 @@ function kusa() {
                 console.log(data.mail);
                 const fmail = data.mail;
                 const fpassword = data.password;
+                const fname = data.name;
+                const ffamilly = data.familly;
                 console.log(data.password);
-                return main(fmail, fpassword);
+                return main(fmail, fpassword, fname, ffamilly);
             });
             yield fastify.listen({ port: 8080 });
             console.log(`Server listening at ${8080}`);
@@ -47,16 +49,15 @@ function kusa() {
         //return main()
     });
 }
-function main(fmail, fpassword) {
+function main(fmail, fpassword, fname, ffamilly) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('server if');
-        const a = 'akaho';
         const result = yield prisma.user.create({
             data: {
                 mail: fmail,
-                name: ';ajlkfds',
-                password: 'ewmm::jaaaaaaaaaaajkjlkllmvs',
-                familly: a,
+                name: fname,
+                password: fpassword,
+                familly: ffamilly,
             },
         });
         console.log(result);

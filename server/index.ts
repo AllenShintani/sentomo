@@ -8,12 +8,8 @@ import fastifyJwt from '@fastify/jwt'
 const fastify: FastifyInstance = Fastyfi()
 fastify.register(fastyfyPrismaClient)*/
 
-/* 
------------------ここから下はfastifyで受け付けたものをdbに登録！---------------
-
-
 import type { FastifyInstance } from 'fastify'
-import Fastify, { fastify as fa } from 'fastify'
+import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import fastifyPrismaClient from 'fastify-prisma-client'
 import type { Prisma } from '@prisma/client'
@@ -23,19 +19,24 @@ const prisma = new PrismaClient()
 const fastify: FastifyInstance = Fastify()
 
 async function kusa() {
-  const resieve = false
-
   ;(async () => {
     await fastify.register(cors, {
       // put your options here
     })
     fastify.post('/data', (req, reply) => {
-      const data = req.body as { mail: string; password: string }
+      const data = req.body as {
+        mail: string
+        password: string
+        name: string
+        familly: string
+      }
       console.log(data.mail)
       const fmail: string = data.mail
       const fpassword: string = data.password
+      const fname: string = data.name
+      const ffamilly: string = data.familly
       console.log(data.password)
-      return main(fmail, fpassword)
+      return main(fmail, fpassword, fname, ffamilly)
     })
 
     await fastify.listen({ port: 8080 })
@@ -45,15 +46,19 @@ async function kusa() {
   //return main()
 }
 
-async function main(fmail: string, fpassword: string) {
+async function main(
+  fmail: string,
+  fpassword: string,
+  fname: string,
+  ffamilly: string
+) {
   console.log('server if')
-  const a = 'akaho'
   const result = await prisma.user.create({
     data: {
       mail: fmail,
-      name: ';ajlkfds',
-      password: 'ewmm::jaaaaaaaaaaajkjlkllmvs',
-      familly: a,
+      name: fname,
+      password: fpassword,
+      familly: ffamilly,
     },
   })
   console.log(result)
