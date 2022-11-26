@@ -7,19 +7,84 @@ import fastifyJwt from '@fastify/jwt'
 /*const prisma = new PrismaClient()
 const fastify: FastifyInstance = Fastyfi()
 fastify.register(fastyfyPrismaClient)*/
+
+/* 
+-----------------ここから下はfastifyで受け付けたものをdbに登録！---------------
+
+
+import type { FastifyInstance } from 'fastify'
+import Fastify, { fastify as fa } from 'fastify'
+import cors from '@fastify/cors'
+import fastifyPrismaClient from 'fastify-prisma-client'
 import type { Prisma } from '@prisma/client'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
+const fastify: FastifyInstance = Fastify()
+
+async function kusa() {
+  const resieve = false
+
+  ;(async () => {
+    await fastify.register(cors, {
+      // put your options here
+    })
+    fastify.post('/data', (req, reply) => {
+      const data = req.body as { mail: string; password: string }
+      console.log(data.mail)
+      const fmail: string = data.mail
+      const fpassword: string = data.password
+      console.log(data.password)
+      return main(fmail, fpassword)
+    })
+
+    await fastify.listen({ port: 8080 })
+    console.log(`Server listening at ${8080}`)
+  })()
+
+  //return main()
+}
+
+async function main(fmail: string, fpassword: string) {
+  console.log('server if')
+  const a = 'akaho'
+  const result = await prisma.user.create({
+    data: {
+      mail: fmail,
+      name: ';ajlkfds',
+      password: 'ewmm::jaaaaaaaaaaajkjlkllmvs',
+      familly: a,
+    },
+  })
+  console.log(result)
+}
+
+kusa()
+  .catch((e) => console.error(e))
+  .finally(async () => await prisma.$disconnect())
+
+/*----------------------------------------------------------------------------この下のコードでnpm run build => npm run start でdb 追加行ける！ commit mはdb追加理解
+
+
+
+import type { FastifyInstance } from 'fastify'
+import Fastify, { fastify as fa } from 'fastify'
+import cors from '@fastify/cors'
+import fastifyPrismaClient from 'fastify-prisma-client'
+import type { Prisma } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
 async function main() {
   console.log('server if')
 
   const result = await prisma.user.create({
     data: {
-      mail: 'elsa@prisma.io',
-      name: 'Elsa Prisma',
-      password: 'jdfksa',
-      familly: 'aofoaajf',
+      mail: 'd;lkfj',
+      name: ';ajlkfds',
+      password: 'ewmmlkvs',
+      familly: 'a',
     },
   })
   console.log(result)
@@ -28,6 +93,66 @@ async function main() {
 main()
   .catch((e) => console.error(e))
   .finally(async () => await prisma.$disconnect())
+
+
+/*---------------------------------------------------------------------------ここまで！！
+
+
+/* この下は実験中
+
+
+import { PrismaClient } from '@prisma/client'
+import type { FastifyInstance } from 'fastify'
+import Fastify, { fastify as fa } from 'fastify'
+import cors from '@fastify/cors'
+import fastifyPrismaClient from 'fastify-prisma-client'
+
+const prisma = new PrismaClient()
+const fastify: FastifyInstance = Fastify()
+fastify.register(fastifyPrismaClient)
+
+async function main() {
+  await fastify.register(cors, {
+    // put your options here
+  })
+  fastify.post('/data', (req, reply) => {
+    const data = req.body as { mail: string; password: string }
+    console.log(data.mail)
+    const mail = data.mail
+    console.log(data.password)
+    const password = data.password
+    return resive(mail, password)
+  })
+  await fastify.listen({ port: 8080 })
+  console.log(`Server listening at ${8080}`)
+}
+
+async function resive(userMail: string, user: string) {
+  ;async () => {
+    const result = await prisma.user.create({
+      data: {
+        mail: userMail,
+        name: 'E risma',
+        password: user,
+        familly: 'oaajf',
+      },
+    })
+    console.log(result)
+  }
+}
+
+main()
+  .catch((e) => {
+    console.error(e)
+    console.log('既に使われているパスワード、もしくはメールアドレスです')
+  })
+  .finally(async () => {
+    console.log('ここ動いてる？')
+    await prisma.$disconnect()
+  })
+
+------------------------------------------------------------------ここまで実験中！！
+  /*
 
 /*
 連想配列としてばらばらに取り出すことに成功！！！
@@ -59,6 +184,8 @@ fastify.register(fastifyPrismaClient)
   console.log(`Server listening at ${8080}`)
   return { hello: 'world' }
 })()
+----------------------------------------------------------------------------------------ここまで
+
 */
 
 //get やり方

@@ -1,4 +1,13 @@
 "use strict";
+/*import Fastify from 'fastify'
+import cors from '@fastify/cors'
+import fastifyPrismaClient from 'fastify-prisma-client'
+import type { FastifyInstance } from 'fastify'
+import fastifyJwt from '@fastify/jwt'
+*/
+/*const prisma = new PrismaClient()
+const fastify: FastifyInstance = Fastyfi()
+fastify.register(fastyfyPrismaClient)*/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,26 +17,145 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const fastify_1 = __importDefault(require("fastify"));
+const cors_1 = __importDefault(require("@fastify/cors"));
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-function main() {
+const fastify = (0, fastify_1.default)();
+function kusa() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const resieve = false;
+        (() => __awaiter(this, void 0, void 0, function* () {
+            yield fastify.register(cors_1.default, {
+            // put your options here
+            });
+            fastify.post('/data', (req, reply) => {
+                const data = req.body;
+                console.log(data.mail);
+                const fmail = data.mail;
+                const fpassword = data.password;
+                console.log(data.password);
+                return main(fmail, fpassword);
+            });
+            yield fastify.listen({ port: 8080 });
+            console.log(`Server listening at ${8080}`);
+        }))();
+        //return main()
+    });
+}
+function main(fmail, fpassword) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('server if');
+        const a = 'akaho';
         const result = yield prisma.user.create({
             data: {
-                mail: 'elsa@prisma.io',
-                name: 'Elsa Prisma',
-                password: 'jdfksa',
-                familly: 'aofoaajf',
+                mail: fmail,
+                name: ';ajlkfds',
+                password: 'ewmm::jaaaaaaaaaaajkjlkllmvs',
+                familly: a,
             },
         });
         console.log(result);
     });
 }
-main()
+kusa()
     .catch((e) => console.error(e))
     .finally(() => __awaiter(void 0, void 0, void 0, function* () { return yield prisma.$disconnect(); }));
+/*----------------------------------------------------------------------------この下のコードでnpm run build => npm run start でdb 追加行ける！ commit mはdb追加理解
+
+
+
+import type { FastifyInstance } from 'fastify'
+import Fastify, { fastify as fa } from 'fastify'
+import cors from '@fastify/cors'
+import fastifyPrismaClient from 'fastify-prisma-client'
+import type { Prisma } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
+async function main() {
+  console.log('server if')
+
+  const result = await prisma.user.create({
+    data: {
+      mail: 'd;lkfj',
+      name: ';ajlkfds',
+      password: 'ewmmlkvs',
+      familly: 'a',
+    },
+  })
+  console.log(result)
+}
+
+main()
+  .catch((e) => console.error(e))
+  .finally(async () => await prisma.$disconnect())
+
+
+/*---------------------------------------------------------------------------ここまで！！
+
+
+/* この下は実験中
+
+
+import { PrismaClient } from '@prisma/client'
+import type { FastifyInstance } from 'fastify'
+import Fastify, { fastify as fa } from 'fastify'
+import cors from '@fastify/cors'
+import fastifyPrismaClient from 'fastify-prisma-client'
+
+const prisma = new PrismaClient()
+const fastify: FastifyInstance = Fastify()
+fastify.register(fastifyPrismaClient)
+
+async function main() {
+  await fastify.register(cors, {
+    // put your options here
+  })
+  fastify.post('/data', (req, reply) => {
+    const data = req.body as { mail: string; password: string }
+    console.log(data.mail)
+    const mail = data.mail
+    console.log(data.password)
+    const password = data.password
+    return resive(mail, password)
+  })
+  await fastify.listen({ port: 8080 })
+  console.log(`Server listening at ${8080}`)
+}
+
+async function resive(userMail: string, user: string) {
+  ;async () => {
+    const result = await prisma.user.create({
+      data: {
+        mail: userMail,
+        name: 'E risma',
+        password: user,
+        familly: 'oaajf',
+      },
+    })
+    console.log(result)
+  }
+}
+
+main()
+  .catch((e) => {
+    console.error(e)
+    console.log('既に使われているパスワード、もしくはメールアドレスです')
+  })
+  .finally(async () => {
+    console.log('ここ動いてる？')
+    await prisma.$disconnect()
+  })
+
+------------------------------------------------------------------ここまで実験中！！
+  /*
+
 /*
 連想配列としてばらばらに取り出すことに成功！！！
 ----------------------------------------------------------------------------
@@ -58,6 +186,8 @@ fastify.register(fastifyPrismaClient)
   console.log(`Server listening at ${8080}`)
   return { hello: 'world' }
 })()
+----------------------------------------------------------------------------------------ここまで
+
 */
 //get やり方
 /*import fastify from 'fastify'
