@@ -21,34 +21,38 @@ import { FirebaseError } from '@firebase/util'
 import type { FormEvent } from 'react'
 import axios from 'axios'
 
-// const axios = require('axios').default
-
 const theme = createTheme()
 
 export default function SignUp() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
+    //--------user情報をdbに登録
+    const userToDb = async () => {
+      axios
+        .post('http://localhost:8080/data', indivData)
+        .then(() => {
+          console.log(indivData)
+          console.log('postの成功。そしてgetへ')
+          return getIp()
+        })
+        .catch((err) => {
+          console.log('err:', 'エラーだよ')
+        })
+    }
+
+    //-----サーバーからユーザー情報取得
+    const getIp = async () => {
+      try {
+        const result = await axios.get('http://localhost:8080/us')
+        console.log(result)
+      } catch (error) {
+        console.log('error!!')
+      }
+    }
+
+    //----------formのデータを取り出す
     const data = new FormData(e.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-      name: data.get('lastName'),
-      familly: data.get('firstName'),
-    })
-
-    //FormDataEntryValue型をstring型に変える。
-
-    /*
-    axios
-      .get(`http://localhost:8080/`)
-      .then(function (response) {
-        console.log('ok')
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-      */
 
     const indivData = {
       mail: data.get('email'),
@@ -56,17 +60,10 @@ export default function SignUp() {
       name: data.get('lastName'),
       familly: data.get('firstName'),
     }
-    const test = data.get('email')
 
-    console.log(indivData)
-    axios
-      .post('http://localhost:8080/data', indivData)
-      .then(() => {
-        console.log(indivData)
-      })
-      .catch((err) => {
-        console.log('err:', 'エラーだよ')
-      })
+    userToDb()
+
+    /*
   }
   /*firebaseの認証
     try {
@@ -81,7 +78,11 @@ export default function SignUp() {
       if (event instanceof FirebaseError) {
         console.log(event)
       }
-    }*/
+
+
+          ---------------------------------------------------
+    */
+  }
 
   return (
     <ThemeProvider theme={theme}>

@@ -12,17 +12,20 @@ fastify.register(fastyfyPrismaClient)*/
 
 import type { FastifyInstance } from 'fastify'
 import Fastify from 'fastify'
+import { fastify as f } from 'fastify'
 import cors from '@fastify/cors'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 const fastify: FastifyInstance = Fastify()
+const server = f()
 
 async function kusa() {
   ;(async () => {
     await fastify.register(cors, {
-      // put your options here
+      // 送り返す！
     })
+
     fastify.post('/data', (req, reply) => {
       const data = req.body as {
         mail: string
@@ -30,13 +33,13 @@ async function kusa() {
         name: string
         familly: string
       }
-      console.log(data.mail)
+      console.log(data)
       const fmail: string = data.mail
       const fpassword: string = data.password
       const fname: string = data.name
       const ffamilly: string = data.familly
-      console.log(data.password)
-      return main(fmail, fpassword, fname, ffamilly)
+      console.log('postで受け取ることはできた')
+      return main(fmail, fpassword, fname, ffamilly, data)
     })
 
     await fastify.listen({ port: 8080 })
@@ -50,9 +53,9 @@ async function main(
   fmail: string,
   fpassword: string,
   fname: string,
-  ffamilly: string
+  ffamilly: string,
+  data: any
 ) {
-  console.log('server if')
   const result = await prisma.user.create({
     data: {
       mail: fmail,
@@ -62,11 +65,26 @@ async function main(
     },
   })
   console.log(result)
+  console.log('mainは回った')
+  response(data)
+  //return response()
+}
+
+async function response(data: any) {
+  console.log('responseまできた')
+  fastify.get('/user', (req, reply) => {
+    reply.send({ hell: 'world' })
+  })
 }
 
 kusa()
   .catch((e) => console.error(e))
-  .finally(async () => await prisma.$disconnect())
+  .finally(async () => {
+    console.log('これでもう終わる！')
+    await prisma.$disconnect()
+  })
+
+//データベースに登録した情報をユーザーに常に定数として持たせる
 
 /*----------------------------------------------------------------------------この下のコードでnpm run build => npm run start でdb 追加行ける！ commit mはdb追加理解
 
@@ -193,7 +211,7 @@ fastify.register(fastifyPrismaClient)
 
 */
 
-//get やり方
+//------------------------------------------------------------------get やり方
 /*import fastify from 'fastify'
 
 const server = fastify()
