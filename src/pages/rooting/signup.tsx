@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
+import Link from 'next/link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
@@ -20,10 +20,13 @@ import {
 import { FirebaseError } from '@firebase/util'
 import type { FormEvent } from 'react'
 import axios from 'axios'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const theme = createTheme()
 
 export default function SignUp() {
+  const router = useRouter()
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -34,21 +37,11 @@ export default function SignUp() {
         .then(() => {
           console.log(indivData)
           console.log('postの成功。そしてgetへ')
-          return getIp()
+          router.push('/')
         })
         .catch((err) => {
           console.log('err:', 'エラーだよ')
         })
-    }
-
-    //-----サーバーからユーザー情報取得
-    const getIp = async () => {
-      try {
-        const result = await axios.get('http://localhost:8080/us')
-        console.log(result)
-      } catch (error) {
-        console.log('error!!')
-      }
     }
 
     //----------formのデータを取り出す
@@ -189,6 +182,7 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+
             <Button
               type="submit"
               fullWidth
@@ -201,14 +195,7 @@ export default function SignUp() {
               container
               justifyContent="flex-end"
             >
-              <Grid item>
-                <Link
-                  href="#"
-                  variant="body2"
-                >
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
+              <Grid item>Already have an account? Sign in</Grid>
             </Grid>
           </Box>
         </Box>

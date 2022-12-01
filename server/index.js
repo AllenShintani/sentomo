@@ -65,16 +65,7 @@ function main(fmail, fpassword, fname, ffamilly, data) {
         });
         console.log(result);
         console.log('mainは回った');
-        response(data);
         //return response()
-    });
-}
-function response(data) {
-    return __awaiter(this, void 0, void 0, function* () {
-        console.log('responseまできた');
-        fastify.get('/user', (req, reply) => {
-            reply.send({ hell: 'world' });
-        });
     });
 }
 kusa()

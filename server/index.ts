@@ -66,15 +66,7 @@ async function main(
   })
   console.log(result)
   console.log('mainは回った')
-  response(data)
   //return response()
-}
-
-async function response(data: any) {
-  console.log('responseまできた')
-  fastify.get('/user', (req, reply) => {
-    reply.send({ hell: 'world' })
-  })
 }
 
 kusa()
