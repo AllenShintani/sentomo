@@ -1,4 +1,6 @@
-import { initializeApp, getApp, getApps } from 'firebase/app'
+import { getApp, getApps, initializeApp } from 'firebase/app'
+import 'firebase/compat/auth'
+import 'firebase/compat/firestore'
 import {
   FIREBASE_API_KEY,
   FIREBASE_APP_ID,
@@ -21,6 +23,5 @@ const firebaseConfig = {
 console.log(firebaseConfig)
 
 export const app = initializeApp(firebaseConfig)
-
 export const initializeFirebaseApp = () =>
   !getApps().length ? initializeApp(firebaseConfig) : getApp()
