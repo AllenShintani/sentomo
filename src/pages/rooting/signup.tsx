@@ -1,24 +1,25 @@
-import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
-import Link from 'next/link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-
-import { FirebaseError } from '@firebase/util'
+import * as React from 'react'
 import type { FormEvent } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
+import { getApp } from 'firebase/app'
+import firebase from '@firebase/app-compat'
+import { getIdToken } from '@firebase/auth'
 
 const theme = createTheme()
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const router = Router
 const userMail = {
@@ -35,10 +36,35 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
   const userToDb = async () => {
     axios
       .post('http://localhost:8080/data', indivData)
-      .then(() => {
+      .then(async () => {
         console.log(indivData)
+        console.log('postの成功。')
+        console.log(getApp())
+        try {
+          // メールアドレスとパスワードを使って認証
+          await firebase
+            .auth()
+            .signInWithEmailAndPassword(
+              indivData['mail'] as string,
+              indivData['password'] as string
+            )
 
-        console.log('postの成功。そしてgetへ')
+          // IDトークン（JWT）取得
+          const token = await firebase.auth().currentUser!.getIdToken(true)
+
+          console.log('下に')
+          console.log(token)
+          console.log('上に')
+          // ローカルストレージに保存
+          //localStorage.setItem('token', token)
+
+          // 認証後のページに遷移
+        } catch (e) {
+          // 認証エラー、トークン取得エラー時
+          console.log(e)
+        }
+
+        console.log('a')
         router.push('/')
       })
       .catch((err) => {
