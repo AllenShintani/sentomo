@@ -14,15 +14,10 @@ import * as React from 'react'
 import type { FormEvent } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
-import { FirebaseError, getApp } from 'firebase/app'
+import { getApp } from 'firebase/app'
 import firebase from '@firebase/app-compat'
 import 'firebase/compat/auth'
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  getIdToken,
-  sendEmailVerification,
-} from '@firebase/auth'
+import { getIdToken } from '@firebase/auth'
 
 const theme = createTheme()
 
@@ -35,7 +30,7 @@ const userMail = {
 //usestateでindivdata
 
 //ボタンが押されたときの処理
-const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
   e.preventDefault()
   //----------formのデータを取り出す
   const data = new FormData(e.currentTarget)
@@ -66,21 +61,25 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
   async function authenticate(this: any) {
     console.log(6)
     try {
-      //ユーザーを登録
-      const auth = getAuth()
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        indivData['mail'] as string,
-        indivData['password'] as string
-      )
-      //トークンを取得
-      const user = auth.currentUser
-      const idToken = await getIdToken(user!, true)
-      console.log(idToken)
-    } catch (event) {
-      if (event instanceof FirebaseError) {
-        console.log(event)
-      }
+      console.log(7)
+      // メールアドレスとパスワードを使って認証
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+      console.log(8)
+
+      // IDトークン（JWT）取得
+      const token = await firebase.auth().currentUser!.getIdToken(true)
+
+      // ローカルストレージに保存
+      localStorage.setItem('token', token)
+
+      // 認証後のページに遷移
+      this.$router.push('/')
+    } catch (e) {
+      // 認証エラー、トークン取得エラー時
+      console.log(9)
+      console.log(e)
     }
   }
 
@@ -90,7 +89,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
   console.log(5)
 }
 
-export default function SignUp() {
+export default function SignIn() {
   /*
   }
   /*firebaseの認証
@@ -106,7 +105,6 @@ export default function SignUp() {
       if (event instanceof FirebaseError) {
         console.log(event)
       }
-    }
 
 
           ---------------------------------------------------
@@ -134,7 +132,7 @@ export default function SignUp() {
             component="h1"
             variant="h5"
           >
-            Sign up
+            Sign in
           </Typography>
           <Box
             component="form"
@@ -224,14 +222,14 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              登録
+              ログイン
             </Button>
             <Grid
               container
               justifyContent="flex-end"
             >
               <Grid item>
-                <a href="/rooting/Signin">既にアカウントをお持ちの方</a>
+                <a href="/rooting/signup">まだアカウントをお持ちでない方</a>
               </Grid>
             </Grid>
           </Box>
