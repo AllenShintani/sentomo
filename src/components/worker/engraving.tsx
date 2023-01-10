@@ -158,76 +158,78 @@ export default function Engraving() {
   const now = new Date()
   console.log(now)
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <React.Fragment>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
 
-      <Container maxWidth="sm">
-        <Stack
-          sx={{ pt: 2 }}
-          direction="row"
-          spacing={3}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Button
-            sx={{
-              height: 150,
-              width: 450,
-              borderBottom: 1,
-              display: 'flex',
-            }}
-            color="primary"
-            variant="contained"
-            size="large"
+        <Container maxWidth="sm">
+          <Stack
+            sx={{ pt: 2 }}
+            direction="row"
+            spacing={3}
+            justifyContent="center"
+            alignItems="center"
           >
-            出勤
-          </Button>{' '}
-          <Button
-            sx={{
-              height: 150,
-              width: 450,
-              borderBottom: 1,
-              display: 'flex',
-            }}
-            variant="contained"
-            color="error"
+            <Button
+              sx={{
+                height: 150,
+                width: 450,
+                borderBottom: 1,
+                display: 'flex',
+              }}
+              color="primary"
+              variant="contained"
+              size="large"
+            >
+              出勤
+            </Button>{' '}
+            <Button
+              sx={{
+                height: 150,
+                width: 450,
+                borderBottom: 1,
+                display: 'flex',
+              }}
+              variant="contained"
+              color="error"
+            >
+              退勤
+            </Button>{' '}
+          </Stack>
+          <Stack
+            sx={{ pt: 6 }}
+            direction="row"
+            spacing={3}
+            justifyContent="center"
+            alignItems="center"
           >
-            退勤
-          </Button>{' '}
-        </Stack>
-        <Stack
-          sx={{ pt: 6 }}
-          direction="row"
-          spacing={3}
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Button
-            sx={{
-              height: 150,
-              width: 450,
-              borderBottom: 1,
-              display: 'flex',
-            }}
-            variant="contained"
-            color="success"
-          >
-            休憩開始
-          </Button>{' '}
-          <Button
-            sx={{
-              height: 150,
-              width: 450,
-              borderBottom: 1,
-              display: 'flex',
-            }}
-            color="secondary"
-            variant="contained"
-          >
-            休憩終了
-          </Button>
-        </Stack>
-      </Container>
-    </ThemeProvider>
+            <Button
+              sx={{
+                height: 150,
+                width: 450,
+                borderBottom: 1,
+                display: 'flex',
+              }}
+              variant="contained"
+              color="success"
+            >
+              休憩開始
+            </Button>{' '}
+            <Button
+              sx={{
+                height: 150,
+                width: 450,
+                borderBottom: 1,
+                display: 'flex',
+              }}
+              color="secondary"
+              variant="contained"
+            >
+              休憩終了
+            </Button>
+          </Stack>
+        </Container>
+      </ThemeProvider>
+    </React.Fragment>
   )
 }

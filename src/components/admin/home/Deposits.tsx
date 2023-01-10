@@ -8,6 +8,13 @@ function preventDefault(event: React.MouseEvent) {
 }
 
 export default function Deposits() {
+  //時間を取得
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth() + 1
+  const day = now.getDate()
+  const week = now.getDay()
+  const dayname = ['日', '月', '火', '水', '木', '金', '土']
   return (
     <React.Fragment>
       <Title>純利益</Title>
@@ -21,7 +28,8 @@ export default function Deposits() {
         color="text.secondary"
         sx={{ flex: 1 }}
       >
-        on 15 March, 2019
+        {/*先月との比較と今月の利益を表示*/}
+        {`${year}年${month}月${day}日` + `[${dayname[week]}]`}
       </Typography>
       <div>
         <Link
@@ -29,6 +37,7 @@ export default function Deposits() {
           href="#"
           onClick={preventDefault}
         >
+          {/*詳細を見るで過去のにもとべる*/}
           詳細を見る
         </Link>
       </div>

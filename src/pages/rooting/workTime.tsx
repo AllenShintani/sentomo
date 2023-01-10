@@ -334,16 +334,35 @@ function DashboardContent() {
               spacing={3}
             >
               {/* Chart */}
+              {/*      
               <Grid
                 item
                 xs={12}
-                md={8}
-                lg={9}
-                marginLeft={17}
+                md={4}
+                lg={3}
               >
                 <Paper
                   sx={{
                     p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 240,
+                  }}
+                >
+                  <Deposits />
+                </Paper> */}
+              <Grid
+                item
+                //画面分割の時の大きさ
+                xs={12}
+                //未確認
+                md={8}
+                //パソコンフルの大きさ
+                lg={15}
+              >
+                <Paper
+                  sx={{
+                    p: 3,
                     display: 'flex',
                     flexDirection: 'column',
                     height: 420,

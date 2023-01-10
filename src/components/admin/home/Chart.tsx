@@ -32,7 +32,8 @@ export default function Chart() {
 
   return (
     <React.Fragment>
-      <Title>Today</Title>
+      {/*日付取得*/}
+      <Title>今日の売り上げ</Title>
       <ResponsiveContainer>
         <LineChart
           data={data}
@@ -61,7 +62,7 @@ export default function Chart() {
                 ...theme.typography.body1,
               }}
             >
-              Sales ($)
+              売り上げ(円)
             </Label>
           </YAxis>
           <Line

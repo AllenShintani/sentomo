@@ -153,11 +153,11 @@ export default function SignUp() {
               >
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="lastName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="lastName"
+                  label="姓"
                   autoFocus
                 />
               </Grid>
@@ -169,9 +169,9 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
+                  id="firstName"
+                  label="名"
+                  name="firstName"
                   autoComplete="family-name"
                 />
               </Grid>
@@ -183,7 +183,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="メールアドレス"
                   name="email"
                   autoComplete="email"
                 />
@@ -196,7 +196,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="パスワード"
                   type="password"
                   id="password"
                   autoComplete="new-password"
